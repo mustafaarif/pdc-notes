@@ -1,14 +1,79 @@
 # openmpi installation on Dardel
 
-Assuming you will be installing openmpi under ~/opt
+### Step 00 - Download source code
 
-## Step 00 - Download source codes
+- Assuming you will be installing openmpi under ~/opt and the source code will be downloaded to ~/source
+- On login node, download the source code
 
-## Step 01 - Compile Autoconf
+```
+AUTO_VERSION=2.71
+OPENMPI_VERSION=4.1.3
 
-AUTO_VERSION=2.7.1 
+mkdir ~/source && cd ~/source
+wget http://ftp.gnu.org/gnu/autoconf/autoconf-$AUTO_VERSION.tar.gz
+wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OPENMPI_VERSION.tar.gz
+tar -xvzf autconf-$AUTO_VERSION.tar.gz
+tar -xvzf $OPENMPI_VERSION.tar.gz
+```
+
+### Step 01 - Compile Autoconf
+
+Request a compute node allocation to do the build - we don't want to do heavy builds on Login node.
+
+```
+salloc --ntasks=16 -t 01:00:00 -p shared
+srun --pty bash -i
+```
+
+Once we are on compute node, we can build Autoconf and OpenMPI
+
+```
+AUTO_VERSION=2.71 
+OPENMPI_VERSION=4.1.3
 mkdir -p ~/opt/autoconf/$AUTO_VERSION
-cd ~/source/
-./configure --prefix=/home/path/to/install/autoconf/$AUTO_VERSION
-make
+mkdir -p ~/opt/openmpi/$OPENMPI_VERSION
+cd ~/source/autoconf-$AUTO_VERSION
+./configure --prefix=~/opt/autoconf/$AUTO_VERSION
+make -j 12
 make install
+export PATH=~/opt/autoconf/$AUTO_VERSION/bin:$PATH
+cd ~/source/openmpi-$OPENMPI_VERSION
+mkdir build && cd build
+../configure --with-pmi --with-pmi-libdir=/usr/lib64 --with-slurm --prefix=~/opt/openmpi/$OPENMPI_VERSION --with-libfabric=/opt/cray/libfabric/1.11.0.4.67
+make -j 16
+make install
+```
+
+### Step 03 - Compile application against OpenMPI
+You will need to set following variables
+```
+module unload cray-mpich/8.1.11 
+OPENMPI_VERSION=4.1.3
+export PATH=~/opt/openmpi/$OPENMPI_VERSION/bin:$PATH
+export LD_LIBRARY_PATH=~/opt/openmpi/$OPENMPI_VERSION/lib:$LD_LIBRARY_PATH
+```
+
+### Step 04 - Submit SLURM Job
+
+Here is a sample SLURM Job, please note as for now 'srun' is not working when using this installation of OpenMPI, you will have to launch with 'mpirun'
+
+```
+#!/bin/bash
+#SBATCH -J OpenMPI
+#SBATCH -p main
+#SBATCH --time=00:05:00
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=128
+#SBATCH --output=slurm-run-%j.out
+#SBATCH --error=slurm-run-%j.err
+
+module unload cray-mpich/8.1.11 
+export PATH=~/opt/openmpi/4.1.3/bin:$PATH
+export LD_LIBRARY_PATH=~/opt/openmpi/4.1.3/lib:$LD_LIBRARY_PATH
+
+# Compile the source code
+mpicc -o hell-mpi.o hello-mpi.c
+
+# Launch simulation
+mpirun -np 256 ./hello-mpi.o
+```
