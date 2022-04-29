@@ -33,13 +33,13 @@ OPENMPI_VERSION=4.1.3
 mkdir -p ~/opt/autoconf/$AUTO_VERSION
 mkdir -p ~/opt/openmpi/$OPENMPI_VERSION
 cd ~/source/autoconf-$AUTO_VERSION
-./configure --prefix=~/opt/autoconf/$AUTO_VERSION
+./configure --prefix=$HOME/opt/autoconf/$AUTO_VERSION
 make -j 12
 make install
 export PATH=~/opt/autoconf/$AUTO_VERSION/bin:$PATH
 cd ~/source/openmpi-$OPENMPI_VERSION
 mkdir build && cd build
-../configure --with-pmi --with-pmi-libdir=/usr/lib64 --with-slurm --prefix=~/opt/openmpi/$OPENMPI_VERSION --with-libfabric=/opt/cray/libfabric/1.11.0.4.67
+../configure --with-pmi --with-pmi-libdir=/usr/lib64 --with-slurm --prefix=$HOME/opt/openmpi/$OPENMPI_VERSION --with-libfabric=/opt/cray/libfabric/1.11.0.4.67
 make -j 16
 make install
 ```
