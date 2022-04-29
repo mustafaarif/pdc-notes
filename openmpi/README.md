@@ -13,7 +13,7 @@ mkdir -p ~/source && cd ~/source
 wget http://ftp.gnu.org/gnu/autoconf/autoconf-$AUTO_VERSION.tar.gz
 wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OPENMPI_VERSION.tar.gz
 tar -xvzf autoconf-$AUTO_VERSION.tar.gz
-tar -xvzf $OPENMPI_VERSION.tar.gz
+tar -xvzf opempi-$OPENMPI_VERSION.tar.gz
 ```
 
 ### Step 01 - Compile Autoconf
