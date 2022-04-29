@@ -3,7 +3,7 @@
 ### Step 00 - Download source code
 
 - Assuming you will be installing openmpi under ~/opt and the source code will be downloaded to ~/source
-- On login node, download the source code
+- While on login node, download the source code
 
 ```
 AUTO_VERSION=2.71
@@ -18,14 +18,14 @@ tar -xvzf $OPENMPI_VERSION.tar.gz
 
 ### Step 01 - Compile Autoconf
 
-Request a compute node allocation to do the build - we don't want to do heavy builds on Login node.
+- Request a compute node allocation to do the build - we don't want to do heavy builds on Login node.
 
 ```
 salloc --ntasks=16 -t 01:00:00 -p shared
 srun --pty bash -i
 ```
 
-Once we are on compute node, we can build Autoconf and OpenMPI
+- Once we are on compute node, we can build Autoconf and OpenMPI
 
 ```
 AUTO_VERSION=2.71 
@@ -45,7 +45,8 @@ make install
 ```
 
 ### Step 03 - Compile application against OpenMPI
-You will need to set following variables
+- You will need to set following variables
+
 ```
 module unload cray-mpich/8.1.11 
 OPENMPI_VERSION=4.1.3
@@ -55,7 +56,7 @@ export LD_LIBRARY_PATH=~/opt/openmpi/$OPENMPI_VERSION/lib:$LD_LIBRARY_PATH
 
 ### Step 04 - Submit SLURM Job
 
-Here is a sample SLURM Job, please note as for now 'srun' is not working when using this installation of OpenMPI, you will have to launch with 'mpirun'
+- Here is a sample SLURM Job, please note as for now 'srun' is not working when using this installation of OpenMPI, you will have to launch with 'mpirun'
 
 ```
 #!/bin/bash
