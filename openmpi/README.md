@@ -48,7 +48,7 @@ make install
 - You will need to set following variables
 
 ```
-module unload cray-mpich/8.1.11 
+module unload cray-mpich
 OPENMPI_VERSION=4.1.3
 export PATH=~/opt/openmpi/$OPENMPI_VERSION/bin:$PATH
 export LD_LIBRARY_PATH=~/opt/openmpi/$OPENMPI_VERSION/lib:$LD_LIBRARY_PATH
@@ -68,7 +68,7 @@ export LD_LIBRARY_PATH=~/opt/openmpi/$OPENMPI_VERSION/lib:$LD_LIBRARY_PATH
 #SBATCH --output=slurm-run-%j.out
 #SBATCH --error=slurm-run-%j.err
 
-module unload cray-mpich/8.1.11 
+module unload cray-mpich
 export PATH=~/opt/openmpi/4.1.3/bin:$PATH
 export LD_LIBRARY_PATH=~/opt/openmpi/4.1.3/lib:$LD_LIBRARY_PATH
 
