@@ -1,4 +1,4 @@
-# openmpi installation on Dardel
+# OpenMPI installation on Dardel
 
 ### Step 00 - Download source code
 
