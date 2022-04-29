@@ -12,7 +12,7 @@ OPENMPI_VERSION=4.1.3
 mkdir -p ~/source && cd ~/source
 wget http://ftp.gnu.org/gnu/autoconf/autoconf-$AUTO_VERSION.tar.gz
 wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OPENMPI_VERSION.tar.gz
-tar -xvzf autconf-$AUTO_VERSION.tar.gz
+tar -xvzf autoconf-$AUTO_VERSION.tar.gz
 tar -xvzf $OPENMPI_VERSION.tar.gz
 ```
 
