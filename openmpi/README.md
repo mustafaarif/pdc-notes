@@ -73,7 +73,7 @@ export PATH=~/opt/openmpi/4.1.3/bin:$PATH
 export LD_LIBRARY_PATH=~/opt/openmpi/4.1.3/lib:$LD_LIBRARY_PATH
 
 # Compile the source code
-mpicc -o hell-mpi.o hello-mpi.c
+mpicc -o hello-mpi.o hello-mpi.c
 
 # Launch simulation
 mpirun -np 256 ./hello-mpi.o
