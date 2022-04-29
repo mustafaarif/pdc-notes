@@ -15,7 +15,7 @@ wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OPENMPI_VERSIO
 tar -xvzf autoconf-$AUTO_VERSION.tar.gz
 tar -xvzf openmpi-$OPENMPI_VERSION.tar.gz
 ```
-### Step 01 - Compile Autoconf
+### Step 01 - Compile Autoconf and OpenMPI
 - Request a compute node allocation to do the build - we don't want to do heavy builds on Login node.
 ```
 salloc --ntasks=16 -t 01:00:00 -p shared
