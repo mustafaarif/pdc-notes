@@ -15,27 +15,26 @@ wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OPENMPI_VERSIO
 tar -xvzf autoconf-$AUTO_VERSION.tar.gz
 tar -xvzf openmpi-$OPENMPI_VERSION.tar.gz
 ```
-
 ### Step 01 - Compile Autoconf
-
 - Request a compute node allocation to do the build - we don't want to do heavy builds on Login node.
-
 ```
 salloc --ntasks=16 -t 01:00:00 -p shared
 srun --pty bash -i
 ```
-
 - Once we are on compute node, we can build Autoconf and OpenMPI
-
 ```
 AUTO_VERSION=2.71 
 OPENMPI_VERSION=4.1.3
 mkdir -p ~/opt/autoconf/$AUTO_VERSION
 mkdir -p ~/opt/openmpi/$OPENMPI_VERSION
+
+# Compile AutoConf
 cd ~/source/autoconf-$AUTO_VERSION
 ./configure --prefix=$HOME/opt/autoconf/$AUTO_VERSION
 make -j 12
 make install
+
+# Compile OpenMPI
 export PATH=~/opt/autoconf/$AUTO_VERSION/bin:$PATH
 cd ~/source/openmpi-$OPENMPI_VERSION
 mkdir build && cd build
@@ -45,8 +44,7 @@ make install
 ```
 
 ### Step 03 - Compile application against OpenMPI
-- You will need to set following variables
-
+- You will need to set following environment variables
 ```
 module unload cray-mpich
 OPENMPI_VERSION=4.1.3
