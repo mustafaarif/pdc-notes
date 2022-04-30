@@ -43,7 +43,7 @@ make -j 16
 make install
 ```
 
-### Step 03 - Compile application against OpenMPI
+### Step 02 - Compile application against OpenMPI
 - You will need to set following environment variables
 ```
 module unload cray-mpich
@@ -52,7 +52,7 @@ export PATH=~/opt/openmpi/$OPENMPI_VERSION/bin:$PATH
 export LD_LIBRARY_PATH=~/opt/openmpi/$OPENMPI_VERSION/lib:$LD_LIBRARY_PATH
 ```
 
-### Step 04 - Submit SLURM Job
+### Step 03 - Submit SLURM Job
 
 - Here is a sample SLURM Job, please note as for now 'srun' is not working when using this installation of OpenMPI, you will have to launch with 'mpirun'
 
