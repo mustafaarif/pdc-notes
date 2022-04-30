@@ -17,6 +17,20 @@ ldd (GNU libc) 2.26
 
 ## Step 00: Download Source Codes
 
+- Assuming you will be installing these packages under ~/opt and the source code will be downloaded to ~/source
+- While on login node, download the source code
+
+```
+AUTO_VERSION=2.71
+OPENMPI_VERSION=4.1.3
+
+mkdir -p ~/source && cd ~/source
+wget http://ftp.gnu.org/gnu/autoconf/autoconf-$AUTO_VERSION.tar.gz
+wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OPENMPI_VERSION.tar.gz
+tar -xvzf autoconf-$AUTO_VERSION.tar.gz
+tar -xvzf openmpi-$OPENMPI_VERSION.tar.gz
+```
+
 ## Step 01: Compile required packages i.e. Singularity, AutoConf, OpenMPI
 
 ## Step 02: Create SLURM.job
