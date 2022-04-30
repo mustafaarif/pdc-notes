@@ -11,7 +11,7 @@ ldd (GNU libc) 2.26
 
 #### Solutions
 - To address glibc problem, we have created a simple Ubuntu container with gfortran installed. When Crystal is launched on Dardel, all the host libraries related to high speed network are bind mount inside the container. This way Crystal can utilize latest version of Glibc available inside the container while continue to use Host (Dardel) HSN libraries. 
-- Another challenge was the host (Dardel) only has cray-mpich available. To address this issue, we have done an experimental compile of OpenMPI on Dardel. This installation of OpenMPI though can run independent on Dardel, however due to the Glibc issue we are still dependent on container. So when Crystal is launched on Dardel, the OpenMPI libraries are also bind mount inside the container. This way the Crystal utilized the container Glibc, host OpenMPI and host HSN libraries.
+- Another challenge was the host (Dardel) only has cray-mpich available. To address this issue, we have done an experimental compile of OpenMPI on Dardel. This installation of OpenMPI though can run independent on Dardel, however due to the Glibc issue we are still dependent on container. So when Crystal is launched on Dardel, the OpenMPI libraries are also bind mount inside the container. This way the Crystal utilizes the container Glibc, host OpenMPI and host HSN libraries.
 
 **Note:** At the moment, Singularity and OpenMPI are not installed on System path and users would have to compile both packages in their home/project directories.
 
