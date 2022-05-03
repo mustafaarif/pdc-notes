@@ -34,5 +34,39 @@ tar -xvzf openmpi-$OPENMPI_VERSION.tar.gz
 ## Step 01: Compile required packages i.e. Singularity, AutoConf, OpenMPI
 
 ## Step 02: Create SLURM.job
+```
+#!/bin/bash
+#SBATCH -J Crystal
+#SBATCH -p main
+#SBATCH --time=24:00:00
+##SBATCH --reservation=sing
+#SBATCH -N 2
+#SBATCH -A pdc.staff
+#SBATCH --ntasks-per-node=128
+#SBATCH --output=slurm-%j.out
+#SBATCH --error=slurm-%j.err
+
+module unload cray-mpich
+
+export PATH=/cfs/klemming/home/m/muarif/opt/openmpi/4.1.3/bin:$PATH
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/hostlibs:/usr/hostlibs/slurm:/usr/hostlibs/libibverbs:/opt/cray/libfa                                                                                       bric/1.11.0.4.67/lib64:/opt/cray/xpmem/2.2.40-7.0.1.0_2.4__g1d7a24d.shasta/lib64:/opt/cray/pe/pmi                                                                                       /default/lib:/opt/cray/pe/pals/1.0.17/lib:/opt/cray/pe/pmi/default/lib:/cfs/klemming/home/m/muari                                                                                       f/opt/openmpi/4.1.3/lib:$LD_LIBRARY_PATH
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+#echo $SINGULARITYENV_LD_LIBRARY_PATH
+
+CRYSTALBIN=/cfs/klemming/home/m/muarif/opt/crystal/v102/bin
+TMPDIR=$SCRATCHDIR/Crystal/$SLURM_JOB_ID
+mkdir -p ${TMPDIR}
+cp INPUT ${TMPDIR}
+cd ${TMPDIR}
+
+echo "Starting at.." ; date
+mpirun -np 256 ~/opt/singularity/bin/singularity exec -B /cfs/klemming/scratch:/cfs/klemming/scra                                                                                       tch -B /etc/libibverbs.d:/etc/libibverbs.d:ro -B /var/spool:/var/spool -B /usr/lib64:/usr/hostlib                                                                                       s -B /opt:/opt:ro -B /var/opt:/var/opt:ro ~/opt/openmpi-hybrid02 $CRYSTALBIN/Pcrystal > OUTPUT 2>                                                                                       &1
+echo "Ending at.." ; date
+
+# Change to the original directory and copy the OUTPUT file from TMPDIR
+cd -
+cp ${TMPDIR}/OUTPUT .
+```
 
 ## Evaluate Results
