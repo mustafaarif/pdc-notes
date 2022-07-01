@@ -1,5 +1,7 @@
 # OpenMPI installation on Dardel
 
+Disclaimer: This is a test build of OpenMPI on Dardel and might not work with certain applications.
+
 ### Step 00 - Download source code
 
 - Assuming you will be installing openmpi under $HOME/opt and the source code will be downloaded to $HOME/source
@@ -43,8 +45,10 @@ make -j 16
 make install
 ```
 
-### Step 02 - Compile application against OpenMPI
+### Step 02 - Use OpenMPI on Dardel
+
 - You will need to set following environment variables
+
 ```
 module unload cray-mpich
 OPENMPI_VERSION=4.1.3
